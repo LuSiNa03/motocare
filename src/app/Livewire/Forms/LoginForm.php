@@ -38,6 +38,16 @@ class LoginForm extends Form
             ]);
         }
 
+        // Only allow users with the 'user' role
+        if (! Auth::user()->hasRole('user')) {
+            Auth::logout();
+            RateLimiter::hit($this->throttleKey());
+
+            throw ValidationException::withMessages([
+                'form.email' => 'Halaman login ini khusus untuk pelanggan.',
+            ]);
+        }
+
         RateLimiter::clear($this->throttleKey());
     }
 

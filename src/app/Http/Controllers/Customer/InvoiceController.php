@@ -60,4 +60,18 @@ class InvoiceController extends Controller
 
         return redirect()->back()->with('success', 'Terima kasih atas ulasan Anda!');
     }
+
+    public function downloadPDF($id)
+    {
+        $invoice = Invoice::findOrFail($id);
+
+        $service = $invoice->service;
+        if ($service->booking->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('customer.invoice-pdf', compact('invoice'));
+        
+        return $pdf->download('invoice-' . $invoice->invoice_number . '.pdf');
+    }
 }

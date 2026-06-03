@@ -20,6 +20,8 @@ class InitialDataSeeder extends Seeder
                     'name' => 'MotoCare Pusat Bandung',
                     'address' => 'Jl. Raya Bengkel No.1, Bandung',
                     'phone' => '08111222333',
+                    'latitude' => -6.9175,
+                    'longitude' => 107.6191,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ],
@@ -27,6 +29,8 @@ class InitialDataSeeder extends Seeder
                     'name' => 'MotoCare Cabang Cimahi',
                     'address' => 'Jl. Amir Machmud No. 99, Cimahi',
                     'phone' => '08222333444',
+                    'latitude' => -6.8868,
+                    'longitude' => 107.5361,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]

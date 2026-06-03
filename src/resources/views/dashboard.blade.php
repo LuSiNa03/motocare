@@ -14,6 +14,16 @@
                 </div>
             @endif
 
+            @if ($errors->any())
+                <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded shadow-sm">
+                    <ul class="list-disc pl-5 text-red-700 font-semibold">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             @php
                 $unpaidInvoices = \App\Models\Invoice::whereHas('service.booking', function($query) {
                     $query->where('user_id', Auth::id());
@@ -52,9 +62,77 @@
                     <div class="bg-white overflow-hidden shadow-xl sm:rounded-2xl border-t-4 border-[#810B38] p-6">
                         <div class="flex justify-between items-center mb-6">
                             <h3 class="text-xl font-bold text-[#541A1A]">Kendaraan Saya</h3>
-                            <button class="bg-[#810B38] hover:bg-[#541A1A] text-white px-4 py-2 rounded-lg text-sm font-bold transition shadow-md">+ Tambah Kendaraan</button>
+                            <button onclick="document.getElementById('modal-tambah-kendaraan').classList.remove('hidden')"
+                                class="bg-[#810B38] hover:bg-[#541A1A] text-white px-4 py-2 rounded-lg text-sm font-bold transition shadow-md">
+                                + Tambah Kendaraan
+                            </button>
                         </div>
-                        
+
+                        <!-- Modal Tambah Kendaraan -->
+                        <div id="modal-tambah-kendaraan" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+                            <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-lg mx-4">
+                                <div class="flex justify-between items-center mb-6">
+                                    <h4 class="text-xl font-bold text-[#541A1A]">Tambah Kendaraan Baru</h4>
+                                    <button onclick="document.getElementById('modal-tambah-kendaraan').classList.add('hidden')"
+                                        class="text-gray-400 hover:text-gray-600 text-2xl font-bold">&times;</button>
+                                </div>
+                                <form method="POST" action="{{ route('vehicle.store') }}">
+                                    @csrf
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-sm font-semibold text-gray-700 mb-1">Merek *</label>
+                                            <input type="text" name="brand" required placeholder="Honda"
+                                                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#810B38] focus:border-[#810B38] outline-none">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-semibold text-gray-700 mb-1">Model *</label>
+                                            <input type="text" name="model" required placeholder="Beat"
+                                                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#810B38] focus:border-[#810B38] outline-none">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-semibold text-gray-700 mb-1">No. Polisi *</label>
+                                            <input type="text" name="plate_number" required placeholder="B 1234 ABC"
+                                                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#810B38] focus:border-[#810B38] outline-none">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-semibold text-gray-700 mb-1">Tahun</label>
+                                            <input type="number" name="year" placeholder="{{ date('Y') }}" min="1990" max="{{ date('Y') + 1 }}"
+                                                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#810B38] focus:border-[#810B38] outline-none">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-semibold text-gray-700 mb-1">Warna</label>
+                                            <input type="text" name="color" placeholder="Merah"
+                                                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#810B38] focus:border-[#810B38] outline-none">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-semibold text-gray-700 mb-1">KM Awal</label>
+                                            <input type="number" name="init_km" placeholder="0" min="0"
+                                                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#810B38] focus:border-[#810B38] outline-none">
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <label class="block text-sm font-semibold text-gray-700 mb-1">No. Mesin</label>
+                                        <input type="text" name="engine_number" placeholder="Opsional"
+                                            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#810B38] focus:border-[#810B38] outline-none">
+                                    </div>
+                                    @error('plate_number')
+                                        <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                                    @enderror
+                                    <div class="flex gap-3 mt-6">
+                                        <button type="button"
+                                            onclick="document.getElementById('modal-tambah-kendaraan').classList.add('hidden')"
+                                            class="flex-1 border-2 border-gray-300 text-gray-700 px-4 py-2 rounded-lg font-bold text-sm hover:bg-gray-50 transition">
+                                            Batal
+                                        </button>
+                                        <button type="submit"
+                                            class="flex-1 bg-[#810B38] hover:bg-[#541A1A] text-white px-4 py-2 rounded-lg font-bold text-sm transition shadow-md">
+                                            Simpan Kendaraan
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
                         <!-- Card Kendaraan -->
                         @forelse(Auth::user()->vehicles as $vehicle)
                         <div class="border border-gray-200 rounded-xl p-4 flex flex-col md:flex-row gap-4 items-center hover:shadow-md transition mb-4">
@@ -90,6 +168,11 @@
                             </div>
                             <div class="shrink-0 flex flex-col gap-2">
                                 <button class="bg-[#DCC3AA] hover:bg-[#541A1A] hover:text-white text-[#541A1A] px-4 py-2 rounded-lg text-sm font-bold transition shadow">Lihat Detail</button>
+                                <form method="POST" action="{{ route('vehicle.destroy', $vehicle->id) }}" onsubmit="return confirm('Hapus kendaraan ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="w-full bg-red-100 hover:bg-red-600 hover:text-white text-red-600 px-4 py-2 rounded-lg text-sm font-bold transition shadow">Hapus</button>
+                                </form>
                             </div>
                         </div>
                         @empty

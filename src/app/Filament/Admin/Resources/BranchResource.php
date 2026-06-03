@@ -32,6 +32,14 @@ class BranchResource extends Resource
                     ->tel()
                     ->maxLength(255)
                     ->default(null),
+                Forms\Components\TextInput::make('latitude')
+                    ->numeric()
+                    ->placeholder('-6.9175')
+                    ->default(null),
+                Forms\Components\TextInput::make('longitude')
+                    ->numeric()
+                    ->placeholder('107.6191')
+                    ->default(null),
             ]);
     }
 

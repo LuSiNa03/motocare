@@ -16,6 +16,9 @@ use Tests\TestCase;
 
 pest()->extend(TestCase::class)
     ->use(RefreshDatabase::class)
+    ->beforeEach(function () {
+        $this->artisan('db:seed', ['--class' => 'RoleSeeder']);
+    })
     ->in('Feature');
 
 /*

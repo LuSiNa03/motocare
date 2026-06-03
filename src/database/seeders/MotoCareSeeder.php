@@ -15,11 +15,21 @@ class MotoCareSeeder extends Seeder
         // Branches
         $branch1 = \App\Models\Branch::firstOrCreate(
             ['name' => 'MotoCare Bandung'],
-            ['address' => 'Jl. Braga No. 1, Bandung', 'phone' => '0221234567']
+            [
+                'address' => 'Jl. Braga No. 1, Bandung', 
+                'phone' => '0221234567',
+                'latitude' => -6.9175,
+                'longitude' => 107.6191
+            ]
         );
         $branch2 = \App\Models\Branch::firstOrCreate(
             ['name' => 'MotoCare Cimahi'],
-            ['address' => 'Jl. Amir Machmud, Cimahi', 'phone' => '0227654321']
+            [
+                'address' => 'Jl. Amir Machmud, Cimahi', 
+                'phone' => '0227654321',
+                'latitude' => -6.8868,
+                'longitude' => 107.5361
+            ]
         );
 
         // Roles

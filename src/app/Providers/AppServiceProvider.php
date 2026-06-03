@@ -29,6 +29,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Gate::before(fn ($user, $ability) => $user->hasRole('super_admin') ? true : null);
+
         \App\Models\Invoice::observe(\App\Observers\InvoiceObserver::class);
         \App\Models\Vehicle::observe(\App\Observers\VehicleObserver::class);
         \App\Models\ServiceDetail::observe(\App\Observers\ServiceDetailObserver::class);

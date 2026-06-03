@@ -67,3 +67,18 @@ Kontribusi, issue, dan permintaan fitur sangat diterima. Silakan fork repository
 ## Lisensi
 
 Proyek ini dilisensikan di bawah MIT License. Lihat `LICENSE` untuk detail.
+
+## Default Credentials
+
+Akun berikut dibuat otomatis oleh seeder saat menjalankan `php artisan migrate --seed`:
+
+| Role | Email | Password |
+|------|-------|----------|
+| Super Admin | superadmin@gmail.com | password |
+| Pegawai | pegawai@gmail.com | password |
+| User | bagas@gmail.com | password |
+| User | tupen@gmail.com | password |
+| User | farel@gmail.com | password |
+| User | iis@gmail.com | password |
+
+Anda dapat menyesuaikan nilai ini melalui file `.env` sebelum menjalankan seeder.

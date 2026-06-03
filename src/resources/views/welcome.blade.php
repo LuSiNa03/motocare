@@ -21,7 +21,7 @@
                 <div class="hidden md:flex space-x-8 items-center">
                     <a href="#" class="hover:text-[#DCC3AA] font-semibold transition">Home</a>
                     <a href="#" class="hover:text-[#DCC3AA] font-semibold transition">Layanan</a>
-                    <a href="#" class="hover:text-[#DCC3AA] font-semibold transition">Cabang</a>
+                    <a href="{{ route('branches.index') }}" class="hover:text-[#DCC3AA] font-semibold transition">Cabang</a>
                     @if (Route::has('login'))
                         @auth
                             <a href="{{ url('/dashboard') }}" class="hover:text-[#DCC3AA] font-semibold transition">Dashboard</a>
